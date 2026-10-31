@@ -105,6 +105,29 @@ npm run dev
 ```
 Frontend sẽ khởi chạy tại: `http://localhost:5173`
 
+### 4. Đóng gói và chạy Backend bằng Docker (Docker Hub)
+Docker image backend đã được đẩy lên Docker Hub tại: [admin2906/backend](https://hub.docker.com/r/admin2906/backend)
+
+#### Cách 1: Kéo image từ Docker Hub và chạy container
+```bash
+docker pull admin2906/backend:latest
+
+docker run -d \
+  --name classroom-backend \
+  -p 5000:5000 \
+  -e PORT=5000 \
+  -e MONGODB_URI="mongodb+srv://<user>:<password>@<cluster>.mongodb.net/235292_DinhVanLam?retryWrites=true&w=majority" \
+  admin2906/backend:latest
+```
+
+#### Cách 2: Tự đóng gói (Build) từ mã nguồn backend
+```bash
+docker build -t admin2906/backend:latest ./backend
+```
+Kiểm tra API:
+- `http://localhost:5000/health`
+- `http://localhost:5000/api/devices`
+
 ---
 
 ## VI. Thông tin nộp bài
