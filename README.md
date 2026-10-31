@@ -185,6 +185,33 @@ docker compose down
    - Thêm quy tắc: Source: `/*` -> Destination: `/index.html` (Action: `Rewrite`) để hỗ trợ Single Page Application.
 7. Nhấn **Create Static Site**.
 
+### 8. Hướng dẫn Triển khai Backend API trên Render (Câu 8)
+- **Tên dịch vụ**: `api-235292`
+- **Loại dịch vụ**: Web Service (Node.js runtime hoặc Docker image `admin2906/backend:latest`)
+- **URL Backend API công khai**: [https://api-235292.onrender.com](https://api-235292.onrender.com)
+- **Health check URL**: [https://api-235292.onrender.com/health](https://api-235292.onrender.com/health)
+- **Devices API URL**: [https://api-235292.onrender.com/api/devices](https://api-235292.onrender.com/api/devices)
+
+#### Các bước triển khai trên Render Dashboard:
+1. Đăng nhập [Render Dashboard](https://dashboard.render.com).
+2. Chọn **New +** -> **Web Service**.
+3. Phương án A - Từ GitHub Repository:
+   - Chọn repo: `yamate2906/235292_DinhVanLam`.
+   - **Name**: `api-235292`
+   - **Root Directory**: `backend`
+   - **Runtime**: `Node`
+   - **Build Command**: `npm install`
+   - **Start Command**: `node server.js`
+4. Phương án B - Từ Docker Hub Image:
+   - Chọn **Deploy an existing image from a registry**.
+   - Image URL: `docker.io/admin2906/backend:latest`.
+5. Cấu hình biến môi trường (**Environment Variables**):
+   - `PORT`: `5000`
+   - `MONGODB_URI`: `mongodb://dinhlamtq2000_db_user:1234567890@ac-4ilbgqg-shard-00-00.2cwmdx9.mongodb.net:27017,ac-4ilbgqg-shard-00-01.2cwmdx9.mongodb.net:27017,ac-4ilbgqg-shard-00-02.2cwmdx9.mongodb.net:27017/235292_DinhVanLam?tls=true&authSource=admin&replicaSet=atlas-akc5fc-shard-0&retryWrites=true&w=majority`
+   - `CLIENT_URL`: `https://web-235292.onrender.com`
+6. Cấu hình **Health Check Path**: `/health`.
+7. Nhấn **Create Web Service**.
+
 ---
 
 ## VI. Thông tin nộp bài
@@ -194,5 +221,5 @@ docker compose down
 | **Link_Docker_Backend** | [https://hub.docker.com/r/admin2906/backend](https://hub.docker.com/r/admin2906/backend) |
 | **Link_Docker_Frontend** | [https://hub.docker.com/r/admin2906/frontend](https://hub.docker.com/r/admin2906/frontend) |
 | **Link_Render_App** | [https://web-235292.onrender.com](https://web-235292.onrender.com) |
-| **Link_Render_API** | Sẽ cập nhật sau khi hoàn thành triển khai |
+| **Link_Render_API** | [https://api-235292.onrender.com](https://api-235292.onrender.com) |
 | **Link_Data_MongoDB** | Database `235292_DinhVanLam`, Collection `devices` trên MongoDB Atlas |
