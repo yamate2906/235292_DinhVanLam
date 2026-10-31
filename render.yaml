@@ -1,0 +1,33 @@
+services:
+  # 1. Backend Web Service: api-235292
+  - type: web
+    name: api-235292
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: CLIENT_URL
+        value: https://web-235292.onrender.com
+
+  # 2. Frontend Static Site: web-235292
+  - type: web
+    name: web-235292
+    runtime: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://api-235292.onrender.com

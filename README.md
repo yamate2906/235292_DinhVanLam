@@ -165,6 +165,26 @@ docker compose down
 - Backend API: `http://localhost:5000`
 - Health check: `http://localhost:5000/health`
 
+### 7. Hướng dẫn Triển khai Frontend trên Render (Câu 7)
+- **Tên dịch vụ**: `web-235292`
+- **Loại dịch vụ**: Static Site (hoặc Web Service từ Docker image `admin2906/frontend:latest`)
+- **URL công khai**: [https://web-235292.onrender.com](https://web-235292.onrender.com)
+
+#### Các bước triển khai trên Render Dashboard:
+1. Đăng nhập [Render Dashboard](https://dashboard.render.com).
+2. Chọn **New +** -> **Static Site** (hoặc **Web Service** nếu dùng Docker).
+3. Kết nối với GitHub repository: `yamate2906/235292_DinhVanLam`.
+4. Điền các thông số:
+   - **Name**: `web-235292`
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm install && npm run build`
+   - **Publish Directory**: `dist`
+5. Cấu hình biến môi trường (**Environment Variables**):
+   - `VITE_API_URL`: `https://api-235292.onrender.com`
+6. Trong mục **Redirects/Rewrites**:
+   - Thêm quy tắc: Source: `/*` -> Destination: `/index.html` (Action: `Rewrite`) để hỗ trợ Single Page Application.
+7. Nhấn **Create Static Site**.
+
 ---
 
 ## VI. Thông tin nộp bài
@@ -173,6 +193,6 @@ docker compose down
 | **Link_GitHub** | [https://github.com/yamate2906/235292_DinhVanLam](https://github.com/yamate2906/235292_DinhVanLam) |
 | **Link_Docker_Backend** | [https://hub.docker.com/r/admin2906/backend](https://hub.docker.com/r/admin2906/backend) |
 | **Link_Docker_Frontend** | [https://hub.docker.com/r/admin2906/frontend](https://hub.docker.com/r/admin2906/frontend) |
-| **Link_Render_App** | Sẽ cập nhật sau khi hoàn thành triển khai |
+| **Link_Render_App** | [https://web-235292.onrender.com](https://web-235292.onrender.com) |
 | **Link_Render_API** | Sẽ cập nhật sau khi hoàn thành triển khai |
 | **Link_Data_MongoDB** | Database `235292_DinhVanLam`, Collection `devices` trên MongoDB Atlas |
