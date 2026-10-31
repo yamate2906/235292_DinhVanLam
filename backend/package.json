@@ -1,7 +1,8 @@
 {
-  "name": "classroom-device-management-backend",
+  "name": "235292_dinhvanlam-backend",
   "version": "1.0.0",
-  "description": "Backend API for Classroom Device Management System - MSSV: 235292",
+  "description": "Backend API for Classroom Device Management System - 235292_DinhVanLam",
+  "author": "Đinh Văn Lắm (235292)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

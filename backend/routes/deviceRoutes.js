@@ -242,10 +242,16 @@ router.put('/:id', async (req, res, next) => {
     }
 
     if (brand !== undefined) {
+      if (!brand.toString().trim()) {
+        return res.status(400).json({ success: false, message: 'Hãng sản xuất không được để trống' });
+      }
       targetDevice.brand = brand.toString().trim();
     }
 
     if (model !== undefined) {
+      if (!model.toString().trim()) {
+        return res.status(400).json({ success: false, message: 'Model thiết bị không được để trống' });
+      }
       targetDevice.model = model.toString().trim();
     }
 

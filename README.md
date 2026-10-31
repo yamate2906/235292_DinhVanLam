@@ -17,26 +17,26 @@ Hệ thống quản lý thiết bị phòng học là ứng dụng web toàn di�
 ---
 
 ## II. Công nghệ sử dụng
-- **Frontend**: React, Vite, Axios, Lucide React / Modern CSS (Responsive, Glassmorphism, Clean UI)
+- **Frontend**: React, Vite, Fetch API, Lucide React / Modern CSS (Responsive, Glassmorphism, Clean UI)
 - **Backend**: Node.js, Express.js, Mongoose, Dotenv, Cors
 - **Database**: MongoDB Atlas (Cloud Database)
 - **Version Control**: Git & GitHub
 - **Containerization**: Docker & Docker Compose, Nginx (Alpine) làm reverse proxy cho frontend
-- **Container Registry**: Docker Hub (`admin2906`)
+- **Container Registry**: Docker Hub (`admin2906` / `DinhVanLam`)
 - **Cloud Platform**: Render
 
 ---
 
 ## III. Quy ước đặt tên tài nguyên
-| Tài nguyên | Tên quy ước |
-|---|---|
-| **GitHub Repository** | `235292_DinhVanLam` |
-| **MongoDB Database** | `235292_DinhVanLam` |
-| **MongoDB Collection** | `devices` |
-| **Docker Hub Backend Image** | `admin2906/backend` |
-| **Docker Hub Frontend Image** | `admin2906/frontend` |
-| **Render Backend API Service** | `api-235292` (hoặc `mern-backend-235292`) |
-| **Render Frontend Web Service** | `web-235292` (hoặc `mern-frontend-235292`) |
+| Tài nguyên | Quy ước theo đề (`235292` - `Đinh Văn Lắm`) | Tên triển khai thực tế |
+|---|---|---|
+| **GitHub Repository** | `235292_DinhVanLam` | `235292_DinhVanLam` |
+| **MongoDB Database** | `235292_DinhVanLam` | `235292_DinhVanLam` |
+| **MongoDB Collection** | `devices` | `devices` |
+| **Docker Hub Backend Image** | `<DinhVanLam>/backend` | `admin2906/backend` |
+| **Docker Hub Frontend Image** | `<DinhVanLam>/frontend` | `admin2906/frontend` |
+| **Render Backend API Service** | `api-235292` | `api-235292` |
+| **Render Frontend Web Service** | `web-235292` | `web-235292` |
 
 ---
 
@@ -45,35 +45,44 @@ Hệ thống quản lý thiết bị phòng học là ứng dụng web toàn di�
 235292_DinhVanLam/
 ├── backend/
 │   ├── models/
-│   │   └── Device.js           # Schema & Model Mongoose cho thiết bị
+│   │   └── Device.js                 # Schema & Model Mongoose cho thiết bị (collection: devices)
 │   ├── routes/
-│   │   └── deviceRoutes.js     # Định tuyến API quản lý thiết bị
+│   │   └── deviceRoutes.js           # Định tuyến RESTful API quản lý thiết bị
 │   ├── scripts/
-│   │   └── seed.js             # Dữ liệu mẫu khởi tạo vào MongoDB Atlas
+│   │   └── seed.js                   # Khởi tạo dữ liệu thiết bị mẫu vào MongoDB Atlas
+│   ├── tests/
+│   │   └── test_api.js               # Kịch bản kiểm thử tự động các endpoint API
 │   ├── .dockerignore
 │   ├── .env.example
-│   ├── Dockerfile
+│   ├── Dockerfile                    # Đóng gói Docker image cho Backend
 │   ├── package.json
-│   └── server.js               # Điểm khởi chạy backend Express
+│   └── server.js                     # Điểm khởi chạy Backend Express & endpoint /health
 ├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/         # Các thành phần giao diện (DeviceList, DeviceModal, ...)
-│   │   ├── services/           # Xử lý gọi API backend (api.js)
-│   │   ├── App.jsx             # Thành phần chính
-│   │   ├── main.jsx            # Entry point React
-│   │   └── index.css           # Thiết kế giao diện hiện đại, responsive
 │   ├── nginx/
-│   │   └── default.conf.template # Cấu hình Nginx reverse proxy khi chạy Docker
+│   │   └── default.conf.template     # Cấu hình Nginx reverse proxy khi chạy Docker
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── ConfirmModal.jsx      # Hộp thoại xác nhận xóa thiết bị
+│   │   │   ├── DeviceDetailModal.jsx # Hộp thoại xem chi tiết thông tin thiết bị
+│   │   │   ├── DeviceModal.jsx       # Biểu mẫu thêm mới và cập nhật thiết bị
+│   │   │   ├── Navbar.jsx            # Thanh điều hướng và hiển thị trạng thái kết nối API
+│   │   │   ├── StatsCards.jsx        # Thẻ thống kê số lượng thiết bị theo tình trạng
+│   │   │   └── Toast.jsx             # Thông báo kết quả thao tác
+│   │   ├── services/
+│   │   │   └── api.js                # Xử lý kết nối và gọi RESTful API tới Backend
+│   │   ├── App.jsx                   # Màn hình chính: danh sách, tìm kiếm, lọc thiết bị
+│   │   ├── index.css                 # Thiết kế giao diện hiện đại, responsive
+│   │   └── main.jsx                  # Entry point ứng dụng React
 │   ├── .dockerignore
 │   ├── .env.example
-│   ├── Dockerfile
+│   ├── Dockerfile                    # Đóng gói Multi-stage Docker image cho Frontend
 │   ├── index.html
 │   ├── package.json
 │   └── vite.config.js
-├── docker-compose.yml          # Chạy toàn bộ hệ thống cục bộ bằng Docker
-├── .gitignore
-└── README.md                   # Tài liệu hướng dẫn và báo cáo đề tài
+├── .gitignore                        # Loại trừ node_modules, .env, dist và tài liệu tạm
+├── docker-compose.yml                # Khởi chạy đồng thời Backend & Frontend bằng Docker
+├── render.yaml                       # Cấu hình Infrastructure as Code triển khai trên Render
+└── README.md                         # Tài liệu hướng dẫn, mô tả dự án và thông tin nộp bài
 ```
 
 ---
@@ -207,7 +216,7 @@ docker compose down
    - Image URL: `docker.io/admin2906/backend:latest`.
 5. Cấu hình biến môi trường (**Environment Variables**):
    - `PORT`: `5000`
-   - `MONGODB_URI`: `mongodb://dinhlamtq2000_db_user:1234567890@ac-4ilbgqg-shard-00-00.2cwmdx9.mongodb.net:27017,ac-4ilbgqg-shard-00-01.2cwmdx9.mongodb.net:27017,ac-4ilbgqg-shard-00-02.2cwmdx9.mongodb.net:27017/235292_DinhVanLam?tls=true&authSource=admin&replicaSet=atlas-akc5fc-shard-0&retryWrites=true&w=majority`
+   - `MONGODB_URI`: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/235292_DinhVanLam?retryWrites=true&w=majority`
    - `CLIENT_URL`: `https://web-235292.onrender.com`
 6. Cấu hình **Health Check Path**: `/health`.
 7. Nhấn **Create Web Service**.
@@ -222,4 +231,37 @@ docker compose down
 | **Link_Docker_Frontend** | [https://hub.docker.com/r/admin2906/frontend](https://hub.docker.com/r/admin2906/frontend) |
 | **Link_Render_App** | [https://web-235292.onrender.com](https://web-235292.onrender.com) |
 | **Link_Render_API** | [https://api-235292.onrender.com](https://api-235292.onrender.com) |
-| **Link_Data_MongoDB** | Database `235292_DinhVanLam`, Collection `devices` trên MongoDB Atlas |
+| **Link_Data_MongoDB** | [https://cloud.mongodb.com](https://cloud.mongodb.com) — Database: `235292_DinhVanLam`, Collection: `devices` (Xem dữ liệu trực tiếp qua API: [https://api-235292.onrender.com/api/devices](https://api-235292.onrender.com/api/devices)) |
+
+- **Link biểu mẫu nộp bài Google Forms**: [https://docs.google.com/forms/d/e/1FAIpQLSf8zdFoKafJBrx4aL6GRq5gVN_-VBjay4NhxTU0SJPAJZm1hg/viewform?usp=header](https://docs.google.com/forms/d/e/1FAIpQLSf8zdFoKafJBrx4aL6GRq5gVN_-VBjay4NhxTU0SJPAJZm1hg/viewform?usp=header)
+
+---
+
+## VII. Kiểm tra tổng thể và Hoàn thiện bài nộp (Câu 9)
+
+### 1. Bảng kiểm tra các chức năng hệ thống
+| STT | Chức năng kiểm tra | Kết quả kiểm tra | Trạng thái |
+|:---:|---|---|:---:|
+| 1 | Endpoint kiểm tra sức khỏe `GET /health` | Trả về `{ status: 'UP', database: 'CONNECTED' }` | ✅ Đạt |
+| 2 | Lấy danh sách thiết bị `GET /api/devices` | Hiển thị 5 thiết bị mẫu từ MongoDB Atlas | ✅ Đạt |
+| 3 | Tìm kiếm thiết bị `GET /api/devices?search=...` | Tìm kiếm chính xác theo mã, tên, loại, phòng | ✅ Đạt |
+| 4 | Xem chi tiết thiết bị `GET /api/devices/:id` | Hiển thị đầy đủ thông số kỹ thuật và tình trạng | ✅ Đạt |
+| 5 | Thêm thiết bị mới `POST /api/devices` | Validate trường bắt buộc, lưu thành công | ✅ Đạt |
+| 6 | Kiểm tra trùng mã `deviceId` | Báo lỗi 400 và thông báo không cho phép trùng | ✅ Đạt |
+| 7 | Cập nhật thiết bị `PUT /api/devices/:id` | Cập nhật tình trạng thiết bị và lưu tức thì | ✅ Đạt |
+| 8 | Xóa thiết bị `DELETE /api/devices/:id` | Xóa thành công và phản hồi 404 sau khi xóa | ✅ Đạt |
+| 9 | Giao diện React hiển thị và tương tác | UI đẹp mắt, responsive, badge trực quan | ✅ Đạt |
+| 10 | Đóng gói Docker Backend & Frontend | Đóng gói thành công và đẩy lên Docker Hub | ✅ Đạt |
+| 11 | Triển khai đám mây Render | Có cấu hình `render.yaml` và hướng dẫn chi tiết | ✅ Đạt |
+
+### 2. Danh sách Commit theo quy định đề thi
+1. `Câu 1. Tạo repository và quản lý mã nguồn bằng GitHub`
+2. `Câu 2. Tạo cơ sở dữ liệu MongoDB Atlas`
+3. `Câu 3. Xây dựng backend API`
+4. `Câu 4. Xây dựng frontend bằng React`
+5. `Câu 5. Đóng gói backend bằng Docker và đẩy lên Docker Hub`
+6. `Câu 6. Đóng gói frontend bằng Docker và đẩy lên Docker Hub`
+7. `Câu 7. Triển khai frontend trên Render`
+8. `Câu 8. Triển khai backend API trên Render`
+9. `Câu 9. Kiểm tra tổng thể và hoàn thiện bài nộp`
+

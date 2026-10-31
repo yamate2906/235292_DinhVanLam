@@ -3,6 +3,7 @@ services:
   - type: web
     name: api-235292
     runtime: node
+    region: singapore
     plan: free
     rootDir: backend
     buildCommand: npm install
@@ -10,7 +11,7 @@ services:
     healthCheckPath: /health
     envVars:
       - key: PORT
-        value: 5000
+        value: "5000"
       - key: MONGODB_URI
         sync: false
       - key: CLIENT_URL
@@ -20,7 +21,6 @@ services:
   - type: web
     name: web-235292
     runtime: static
-    plan: free
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist

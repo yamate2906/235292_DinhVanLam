@@ -1,7 +1,9 @@
 {
-  "name": "classroom-device-management-frontend",
+  "name": "235292_dinhvanlam-frontend",
   "private": true,
   "version": "1.0.0",
+  "description": "Frontend Web App for Classroom Device Management System - 235292_DinhVanLam",
+  "author": "Đinh Văn Lắm (235292)",
   "type": "module",
   "scripts": {
     "dev": "vite",
