@@ -128,6 +128,43 @@ Kiểm tra API:
 - `http://localhost:5000/health`
 - `http://localhost:5000/api/devices`
 
+### 5. Đóng gói và chạy Frontend bằng Docker (Docker Hub)
+Docker image frontend đã được đẩy lên Docker Hub tại: [admin2906/frontend](https://hub.docker.com/r/admin2906/frontend)
+
+#### Cách 1: Kéo image từ Docker Hub và chạy container
+```bash
+docker pull admin2906/frontend:latest
+
+docker run -d \
+  --name classroom-frontend \
+  -p 4173:80 \
+  -e PORT=80 \
+  -e BACKEND_URL=http://<IP_hoặc_domain_backend>:5000 \
+  admin2906/frontend:latest
+```
+Truy cập giao diện: `http://localhost:4173`
+
+#### Cách 2: Tự đóng gói (Build) từ mã nguồn frontend
+```bash
+docker build -t admin2906/frontend:latest ./frontend
+```
+
+### 6. Khởi chạy đồng thời cả Frontend và Backend bằng Docker Compose
+Để khởi động toàn bộ hệ thống gồm Frontend, Backend và kết nối MongoDB Atlas chỉ với một lệnh:
+```bash
+# Khởi chạy toàn bộ hệ thống ở chế độ nền
+docker compose up -d --build
+
+# Xem log các dịch vụ
+docker compose logs -f
+
+# Dừng hệ thống
+docker compose down
+```
+- Frontend: `http://localhost:4173`
+- Backend API: `http://localhost:5000`
+- Health check: `http://localhost:5000/health`
+
 ---
 
 ## VI. Thông tin nộp bài
